@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom';
 function JobsDetails() {
   const [jobDetails, setJobDetails] = useState([]);
 
-//grab job id from the from params
-
 // const date4Roman4 = date4.toLocaleString();
 // console.log(date4Roman4); //7/3/2022, 3:08:17 AM
 
@@ -15,6 +13,7 @@ function JobsDetails() {
     const fetchJobs = async () => {
       const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
       const data = await response.json();
+      
       setJobDetails(data)
       console.log("data2")
       console.log(data)

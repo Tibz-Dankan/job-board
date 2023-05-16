@@ -1,34 +1,53 @@
-import  { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 
 function Jobs() {
-  const [jobs, setJobs] = useState([]);
+  //   const [jobDetails, setJobDetails] = useState([]);
+  const [jobDetails, setJobDetails] = useState([]);
 
-  const navigate = useNavigate();
-
-  const navigateToJobDetails = (jobId) => {
-    navigate(`/jobs/${jobId}`);
-  };
+  //   const jobDetails = [];
 
   useEffect(() => {
-    const fetchJobs = async () => {
-
-      const response = await fetch("https://hacker-news.firebaseio.com/v0/jobstories.json");
+    //
+    const fetchJobDetails = async (id) => {
+      const response = await fetch(
+        `https://hacker-news.firebaseio.com/v0/item/${id}.json`
+      );
       const data = await response.json();
-      setJobs(data)
-      console.log("data")
-      console.log(data)
-
+      setJobDetails((jobsData) => [...jobsData, data]);
+      //   jobDetails.push(data);
+      console.log("jobDetails");
+      console.log(jobDetails);
     };
 
-    fetchJobs();
+    const fetchJobIds = async () => {
+      const response = await fetch(
+        "https://hacker-news.firebaseio.com/v0/jobstories.json"
+      );
+      const data = await response.json();
+      //   console.log("data");
+      //   console.log(data);
+
+      data.map((jobId) => {
+        fetchJobDetails(jobId);
+      });
+      //   console.log("jobDetails");x
+      //   console.log(jobDetails);
+    };
+
+    fetchJobIds();
   }, []);
 
   return (
     <div>
-      {jobs.map((jobId) => (
-        <p key={jobId} onClick={()=>navigateToJobDetails(jobId)}>{jobId}</p>
-      ))}
+      <h1>Jobs</h1>
+      {jobDetails.map((jobDetail, index) => {
+        return (
+          <p key={index}>
+            <span>{jobDetail.title}</span>
+            <span>{new Date(jobDetail.time).toLocaleString()}</span>
+          </p>
+        );
+      })}
     </div>
   );
 }
