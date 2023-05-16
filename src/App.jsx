@@ -1,11 +1,13 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider ,Navigate} from "react-router-dom";
-import Jobs from './components/Jobs';
-import JobsDetails from './components/JobDetails';
-
+import React from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
+import Jobs from "./components/Jobs";
+import JobsDetails from "./components/JobDetails";
 
 function App() {
-
   const router = createBrowserRouter([
     {
       path: "/jobs",
@@ -19,13 +21,12 @@ function App() {
       path: "*",
       element: <Navigate to="/jobs" />,
     },
- 
   ]);
 
   return (
-  <div>
-       <RouterProvider router={router} />
-  </div>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
 }
 
